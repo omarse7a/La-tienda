@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
+    'django_bootstrap_icons',
     'core.apps.CoreConfig',
+    'products.apps.ProductsConfig'
 ]
 
 MIDDLEWARE = [
@@ -123,6 +125,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'store/static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'core/static'),
+    os.path.join(BASE_DIR, 'products/static'),
 ]
 
 #media files config.
