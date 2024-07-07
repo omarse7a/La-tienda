@@ -4,11 +4,11 @@ from django.db import models
 class Category(models.Model):
     cat_name = models.CharField(max_length=255, verbose_name="category name")
 
-    class Meta:
-        verbose_name_plural = "Categories"
-
     def __str__(self):
         return self.cat_name
+    
+    class Meta:
+        verbose_name_plural = "Categories"
     
 class Product(models.Model):
     name = models.CharField(max_length=255)

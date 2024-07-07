@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md bg-dark navbar-dark py-3 fixed-top" aria-label="Main navigation">
         <div class="container">
-            <a href="#" class="navbar-brand">E-Store</a>
+            <a href="{% url 'index' %}" class="navbar-brand">E-Store</a>
 
             <button 
                 class="navbar-toggler" 
@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item px-2 px-lg-4">
-                        <a href="#" class="nav-link" aria-label="Home">Home</a>
+                        <a href="{% url 'index' %}" class="nav-link" aria-label="Home">Home</a>
                     </li>
                     <li class="nav-item px-2 px-lg-4">
                         <a href="{% url 'products' %}" class="nav-link" aria-label="Products">Products</a>
@@ -47,7 +47,7 @@
                   <a href="#" class="nav-link" aria-label="Wish List">{% bs_icon 'heart' size='1.5em' %}</a>
               </li>
               <li class="nav-item">
-                  <a href="#" class="nav-link" aria-label="Shopping Cart">{% bs_icon 'cart' size='1.5em' %}</a>
+                  <a href="#" class="nav-link" aria-label="Shopping Cart">{% bs_icon 'bag' size='1.5em' %}</a>
               </li>
           </ul>
         </div>
