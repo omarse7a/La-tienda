@@ -1,9 +1,0 @@
-nav .navbar-brand{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
-body::before {
-    display: block;
-    content: '';
-    height: 5vh;
-}
