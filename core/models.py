@@ -9,7 +9,7 @@ class Category(models.Model):
         return self.cat_name
     
     def get_cat_products(self):
-        return self.cat_products.all()
+        return self.products.all()
     
     class Meta:
         verbose_name_plural = "Categories"
@@ -42,13 +42,17 @@ class Stock(models.Model):
         ("S", "Small"),
         ("M", "Medium"),
         ("L", "Large"),
+        ("32", "32"),
+        ("34", "34"),
+        ("36", "36"),
+        ("38", "38"),
     ]
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     size = models.CharField(max_length=20, choices=SIZE_CHOICES)
     quantity = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
-        return f"Stock for {self.product.name} - Size: {self.size}"
+        return f"{self.quantity} Pieces of {self.product.name} - Size: {self.size}"
 
     class Meta:
         unique_together = ('product', 'size')
