@@ -1,0 +1,29 @@
+{% extends 'products/products_layout.html' %}
+
+{% load bootstrap5 %}
+{% load bootstrap_icons %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+<!-- products section -->
+<section class="p-5 bg-dark text-light">
+  <div class="container">
+    <h1 class="text-center mb-5">{% bs_icon 'dash-lg' size='1.5em' %} {{selected_cat | capfirst}} {% bs_icon 'dash-lg' size='1.5em' %}</h1>
+    <div class="row g-5">
+      
+      {% for product in products %}
+      <div class="col-lg-4 col-md-6">
+        <a href="#" class="text-decoration-none text-light">
+          <div class="my-card">
+            <img src="{{product.main_image.url}}" class="card-img-top img-fluid" alt="product-img">
+            <p class="lead py-3">{{product.name}} - {{product.price}} EGP</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock content %}
+

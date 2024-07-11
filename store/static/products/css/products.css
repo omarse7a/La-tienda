@@ -3,13 +3,12 @@ nav .navbar-brand{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.search-inp{
+.square-border{
     border-radius: 0;
 }
 
-
 @media (max-width: 992px) {
-    .custom-inp{
+    .search-inp{
         width: 40%;
     }
     
@@ -21,5 +20,10 @@ nav .navbar-brand{
 
 /* products section */
 .my-card img{
-    height: 500px;
+    height: 400px;
+}
+
+/* product details section */
+.prod-img{
+    height: 75vh;
 }
