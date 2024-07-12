@@ -20,10 +20,10 @@ nav .navbar-brand{
 
 /* products section */
 .my-card img{
-    height: 400px;
+    height: 50vh;
 }
 
 /* product details section */
 .prod-img{
-    height: 75vh;
+    height: 82vh;
 }

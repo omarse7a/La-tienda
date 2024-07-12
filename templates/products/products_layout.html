@@ -38,8 +38,7 @@
                     <ul class="dropdown-menu dropmenu">
                         {% for category in categories %}
                         <li>
-                            <a class="dropdown-item" href="{% url 'products' category.cat_name %}">{{category.cat_name |
-                                capfirst}}</a>
+                            <a class="dropdown-item" href="{% url 'products' category.cat_name %}">{{category.cat_name | capfirst}}</a>
                         </li>
                         {% endfor %}
                     </ul>

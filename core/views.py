@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from .models import Product, Category
+from .models import Product, Category, Stock
 
 # Create your views here.
 def index(request):
@@ -13,7 +13,7 @@ def product_list(request, cat_name):
 
     # Filter by selected category
     if cat_name == "all":
-        products = Product.objects.all()  # Get all products from db
+        products = Product.objects.all()  # get all products from db
     else:
         category = Category.objects.get(cat_name=cat_name)
         products = category.get_cat_products()  # get all products by this category
@@ -26,7 +26,7 @@ def product_list(request, cat_name):
     return render(request, "products/product_list.html", context)
 
 def product_search(request):
-    categories = Category.objects.all()  # Get all categories from db
+    categories = Category.objects.all()  # get all categories from db
 
     # Search functionality
     search_value = request.GET.get("search-inp", "")
@@ -36,7 +36,7 @@ def product_search(request):
         )
         selected_cat = f"results for '{search_value}'"
     else:
-        products = Product.objects.all()  # Get all products from db
+        products = Product.objects.all()  # get all products from db
         selected_cat = "all"
     
     context = {
@@ -45,3 +45,21 @@ def product_search(request):
                 "selected_cat": selected_cat, 
                }
     return render(request, "products/product_list.html", context)
+
+def product_details(request, prod_id):
+    categories = Category.objects.all()  # get all categories from db
+    product = Product.objects.get(id=prod_id)  # get the selected product data from db
+    extra_imgs = product.get_images()
+    img_num = extra_imgs.count() if extra_imgs else 0
+    img_range = range(1, img_num+1)
+    stocks = Stock.objects.filter(product=product)
+    
+    ###########################################
+    context = {
+                "product": product, 
+                "categories": categories,
+                "product_imgs" : extra_imgs,
+                "img_num" : img_num,
+                "img_range" : img_range,
+               }
+    return render(request, "products/product_details.html", context)
