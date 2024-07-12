@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -21,9 +22,16 @@ class Product(models.Model):
     fit = models.CharField(max_length=255, blank=True, null=True)
     category = models.ForeignKey(Category, null=True, related_name='products', on_delete=models.SET_NULL)
     main_image = models.ImageField(upload_to='product-images/%y/%m/%d')
+    created_at = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(unique=True, blank=True, null=True, verbose_name="name in URL")
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
     
     def get_images(self):
         return self.images.all()
@@ -39,13 +47,15 @@ class ProductImage(models.Model):
     
 class Stock(models.Model):
     SIZE_CHOICES = [
-        ("S", "Small"),
-        ("M", "Medium"),
-        ("L", "Large"),
-        ("32", "32"),
-        ("34", "34"),
-        ("36", "36"),
-        ("38", "38"),
+        ("X-Small", "XS"),
+        ("Small", "S"),
+        ("Medium","M"),
+        ("Large", "L"),
+        ("X-Large", "XL"),
+        # ("32", "32"),
+        # ("34", "34"),
+        # ("36", "36"),
+        # ("38", "38"),
     ]
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     size = models.CharField(max_length=20, choices=SIZE_CHOICES)

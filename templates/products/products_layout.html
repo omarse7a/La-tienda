@@ -47,7 +47,7 @@
             </ul>
 
             <form action="{% url 'search' %}" class="d-flex my-3 my-lg-0 px-2 px-lg-3" role="search">
-                <input name="search-inp" class="form-control me-2 square-border" type="search" placeholder="Search"
+                <input name="search-inp" class="form-control me-2 square-border search-inp" type="search" placeholder="Search"
                     aria-label="Search">
                 <button class="btn btn-outline-light square-border" type="submit">{% bs_icon 'search' %}</button>
             </form>
@@ -74,7 +74,7 @@
 <footer class="bg-light p-5 text-center position-relative">
     <div class="container">
         <p class="lead"> Copyright &copy; 2024 E-Store</p>
-        <a href="#" class="position-absolute bottom-0 end-0 p-5 text-secondary">
+        <a href="#" class="position-absolute bottom-0 end-0 p-5 text-secondary"> <!-- back button bug because of the url! -->
             {% bs_icon 'arrow-up-circle' size='2em' %}
         </a>
         <a href="#" class="text-decoration-none link-hover text-secondary">Return & Exchange Policy</a>

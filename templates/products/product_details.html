@@ -7,21 +7,19 @@
 
 {% block content %}
 <!-- product details section -->
-<!-- <a href="{% url 'products' 'all' %}" class="d-none d-xxl-block position-absolute top-25 start-0 p-5 text-secondary text-decoration-none">
-  {% bs_icon 'arrow-left-square' size='2em' %} Back
-</a> -->
 <section class="p-5 bg-dark text-light">
-  <div class="container">
+  <div class="container mb-5">
+    <button class="btn btn-dark" onclick="history.back()">{% bs_icon 'arrow-left-short' size='1.5em' %} Back</button>
     <div class="row g-5">
 
-      <div class="col-lg ">
+      <div class="col-lg">
 
-        <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
+        <div id="productCarousel" class="carousel carousel-dark slide mb-2">
           <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active"
               aria-current="true"></button>
               {% for slide in img_range %}
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ slide }}" "></button>
+              <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="{{ slide }}" "></button>
               {% endfor %}
           </div>
           <div class="carousel-inner">
@@ -37,12 +35,12 @@
               <img src="{{ product_imgs.url }}" class="d-block w-100 prod-img" alt="...">
             </div> -->
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+          <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
             data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+          <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
             data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
@@ -53,8 +51,8 @@
 
       <div class="col-lg px-5">
 
-        <div class="">
-          <h2 class="mb-5">{{product.name}}</h2>
+        <h2 class="mb-5">{{product.name}}</h2>
+        <div class="px-3">
           <p class="lead">{{product.price}} EGP - Tax included.</p>
           <p class="lead">{{product.description | capfirst}}</p>
           <p>CATEGORY {% bs_icon 'dash-lg' size='1.5em' %} {{product.category.cat_name | capfirst }}</p>
@@ -65,9 +63,13 @@
           <div class="d-flex flex-column mt-5 mx-md-5">
             <p class="text-center">{% bs_icon 'dash-lg' size='1.5em' %} Size {% bs_icon 'dash-lg' size='1.5em' %}</p>
             <select class="form-select mb-5 square-border" name="size">
-              <option value="S">Small</option>
-              <option value="M">Medium</option>
-              <option value="L">Large</option>
+              {% for stock in stocks %}
+                {% if stock.quantity == 0 %}
+                  <option class="square-border" value="{{stock.size}}" disabled>{{stock.size}}</option>
+                {% else %}
+                  <option class="square-border" value="{{stock.size}}">{{stock.size}}</option>
+                {% endif %}
+              {% endfor %}
             </select>
             <button type="button" class="btn btn-outline-light mb-3 square-border">ADD TO BAG</button>
             <button type="button" class="btn btn-light mb-3 square-border">ADD TO WISHLIST</button>

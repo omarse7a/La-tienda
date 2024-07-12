@@ -46,9 +46,9 @@ def product_search(request):
                }
     return render(request, "products/product_list.html", context)
 
-def product_details(request, prod_id):
+def product_details(request, slug):
     categories = Category.objects.all()  # get all categories from db
-    product = Product.objects.get(id=prod_id)  # get the selected product data from db
+    product = Product.objects.get(slug=slug)  # get the selected product data from db
     extra_imgs = product.get_images()
     img_num = extra_imgs.count() if extra_imgs else 0
     img_range = range(1, img_num+1)
@@ -61,5 +61,6 @@ def product_details(request, prod_id):
                 "product_imgs" : extra_imgs,
                 "img_num" : img_num,
                 "img_range" : img_range,
+                "stocks" : stocks,
                }
     return render(request, "products/product_details.html", context)
