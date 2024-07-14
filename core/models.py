@@ -27,14 +27,18 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-    
+     
+    def get_images(self):
+        return self.images.all()
+        
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-    
-    def get_images(self):
-        return self.images.all()
+         # initialize stock for all sizes
+        sizes = [choice[0] for choice in Stock.SIZE_CHOICES]
+        for size in sizes:
+            Stock.objects.get_or_create(product=self, size=size)
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
@@ -44,7 +48,6 @@ class ProductImage(models.Model):
         return f"Image for {self.product.name}"
     
 
-    
 class Stock(models.Model):
     SIZE_CHOICES = [
         ("X-Small", "XS"),
@@ -52,10 +55,6 @@ class Stock(models.Model):
         ("Medium","M"),
         ("Large", "L"),
         ("X-Large", "XL"),
-        # ("32", "32"),
-        # ("34", "34"),
-        # ("36", "36"),
-        # ("38", "38"),
     ]
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     size = models.CharField(max_length=20, choices=SIZE_CHOICES)
@@ -66,6 +65,7 @@ class Stock(models.Model):
 
     class Meta:
         unique_together = ('product', 'size')
+        ordering = ['product']
         indexes = [
             models.Index(fields=['product', 'size']),
         ]

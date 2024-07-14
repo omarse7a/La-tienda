@@ -24,16 +24,13 @@
           </div>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="{{ product.main_image.url }}" class="d-block w-100 prod-img" alt="...">
+              <img src="{{ product.main_image.url }}" class="d-block w-100 prod-img" alt="product-main-image" loading="lazy">
             </div>
             {% for img_obj in product_imgs %}
             <div class="carousel-item">
-              <img src="{{ img_obj.image.url }}" class="d-block w-100 prod-img" alt="...">
+              <img src="{{ img_obj.image.url }}" class="d-block w-100 prod-img" alt="product-extra-emage" loading="lazy">
             </div>
             {% endfor %}
-            <!-- <div class="carousel-item">
-              <img src="{{ product_imgs.url }}" class="d-block w-100 prod-img" alt="...">
-            </div> -->
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
             data-bs-slide="prev">
