@@ -16,14 +16,22 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
     
 class Product(models.Model):
+
+    FITS = [
+        ('regular_fit', 'Regular Fit'),
+        ('relaxed_fit', 'Relaxed Fit'),
+        ('slim_fit', 'Slim Fit'),
+    ]
+
     name = models.CharField(max_length=255)
     price = models.IntegerField(default=0)
     description = models.TextField(blank=True, null=True)
-    fit = models.CharField(max_length=255, blank=True, null=True)
+    fit = models.CharField(max_length=255, choices=FITS, default="regular_fit")
     category = models.ForeignKey(Category, null=True, related_name='products', on_delete=models.SET_NULL)
     main_image = models.ImageField(upload_to='product-images/%y/%m/%d')
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True, blank=True, null=True, verbose_name="name in URL")
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -35,10 +43,10 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-         # initialize stock for all sizes
-        sizes = [choice[0] for choice in Stock.SIZE_CHOICES]
-        for size in sizes:
-            Stock.objects.get_or_create(product=self, size=size)
+        #  # initialize stock for all sizes
+        # sizes = [choice[0] for choice in Stock.SIZE_CHOICES]
+        # for size in sizes:
+        #     Stock.objects.get_or_create(product=self, size=size)
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
@@ -65,7 +73,7 @@ class Stock(models.Model):
 
     class Meta:
         unique_together = ('product', 'size')
-        ordering = ['product']
+        ordering = ['product',]
         indexes = [
             models.Index(fields=['product', 'size']),
         ]
