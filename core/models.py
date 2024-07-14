@@ -18,15 +18,16 @@ class Category(models.Model):
 class Product(models.Model):
 
     FITS = [
-        ('regular_fit', 'Regular Fit'),
-        ('relaxed_fit', 'Relaxed Fit'),
-        ('slim_fit', 'Slim Fit'),
+        ('Regular Fit', 'regular_fit'),
+        ('Slim Fit', 'slim_fit'),
+        ('Relaxed Fit', 'relaxed_fit'),
     ]
+
 
     name = models.CharField(max_length=255)
     price = models.IntegerField(default=0)
     description = models.TextField(blank=True, null=True)
-    fit = models.CharField(max_length=255, choices=FITS, default="regular_fit")
+    fit = models.CharField(max_length=255, choices=FITS, default="Regular Fit")
     category = models.ForeignKey(Category, null=True, related_name='products', on_delete=models.SET_NULL)
     main_image = models.ImageField(upload_to='product-images/%y/%m/%d')
     created_at = models.DateTimeField(auto_now_add=True)

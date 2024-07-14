@@ -13,10 +13,10 @@ def product_list(request, cat_name):
 
     # Filter by selected category
     if cat_name == "all":
-        products = Product.objects.all()  # get all products from db
+        products = Product.objects.filter(active=True)  # get all products from db
     else:
         category = Category.objects.get(cat_name=cat_name)
-        products = category.get_cat_products()  # get all products by this category
+        products = category.get_cat_products()  # get all active products by this category
     
     context = {
                 "products": products, 
@@ -36,7 +36,7 @@ def product_search(request):
         )
         selected_cat = f"results for '{search_value}'"
     else:
-        products = Product.objects.all()  # get all products from db
+        products = Product.objects.filter(active=True)  # get all active products from db
         selected_cat = "all"
     
     context = {
