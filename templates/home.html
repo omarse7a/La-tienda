@@ -1,19 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Store</title>
-    {% load static %}
-    {% load bootstrap5 %}
-    {% load bootstrap_icons %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
-</head>
-<body>
+{% extends 'layout.html' %}
+
+{% load static %}
+{% load bootstrap5 %}
+{% load bootstrap_icons %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'core/css/home.css' %}">
+{% endblock head %}
+
+{% block main %}  
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark py-3 fixed-top" aria-label="Main navigation">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark py-3" aria-label="Main navigation">
         <div class="container">
             <a href="#" class="navbar-brand">E-Store</a>
 
@@ -73,7 +72,7 @@
     <!-- featured products -->
 
     <!-- contact us -->
-    <section id="contact" class="p-5">
+    <section id="contact" class="p-5 bg-white">
         <div class="container">
             <div class="row g-4">
                 <div class="col-md">
@@ -99,16 +98,7 @@
             </div>
         </div>
     </section>
-    
-    <!-- Footer -->
-    <footer class="bg-dark p-5 text-center text-white position-relative">
-        <div class="container">
-            <p class="lead"> Copyright &copy; 2024 E-Store</p>
-            <!-- <a href="#" class="position-absolute bottom-0 end-0 p-5 text-secondary">
-                <i class="bi bi-arrow-up-circle h1"></i>
-            </a> -->
-        </div>
-    </footer>
+
+
+{% endblock main %} 
   
-</body>
-</html>
