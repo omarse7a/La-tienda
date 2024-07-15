@@ -36,6 +36,9 @@
                         Category
                     </a>
                     <ul class="dropdown-menu dropmenu">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'products' 'all' %}">All</a>
+                        </li>
                         {% for category in categories %}
                         <li>
                             <a class="dropdown-item" href="{% url 'products' category.cat_name %}">{{category.cat_name | capfirst}}</a>

@@ -26,8 +26,10 @@ class StockInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "active"]
+    list_display = ["name", "category", "active"]
     list_editable = ["active"]
+    list_filter = ["category", "active"]
+    search_fields = ["name"]
     list_per_page = 10
     inlines = [ProductImageInline, StockInline]
     
