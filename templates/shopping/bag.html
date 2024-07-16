@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+{% load bootstrap5 %}
+{% load bootstrap_icons %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'shopping/css/bag.css' %}">
+{% endblock head %}
+
+{% block main %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md bg-dark navbar-dark py-3" aria-label="Main navigation">
+	<div class="container">
+		<a href="#" class="navbar-brand">E-Store</a>
+
+		<button 
+			class="navbar-toggler" 
+			type="button" 
+			data-bs-toggle="collapse" 
+			data-bs-target="#navmenu" 
+			aria-controls="navmenu" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation"
+		>
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navmenu">
+			<ul class="navbar-nav ms-auto">
+				<li class="nav-item px-2 px-lg-4">
+					<a href="#" class="nav-link" aria-label="Home">Home</a>
+				</li>
+				<li class="nav-item px-2 px-lg-4">
+					<a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
+				</li>
+				<li class="nav-item px-2 px-lg-4">
+					<a href="#contact" class="nav-link" aria-label="About Us">Contact Us</a>
+				</li>
+			</ul>
+		</div>
+		<ul class="navbar-nav d-flex flex-row ms-auto">
+			<li class="nav-item px-2 px-lg-3">
+				<a href="#" class="nav-link" aria-label="Wish List">{% bs_icon 'heart' size='1.5em' %}</a>
+			</li>
+			<li class="nav-item">
+				<a href="#" class="nav-link" aria-label="Shopping Cart">{% bs_icon 'bag' size='1.5em' %}</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<!-- bag products -->
+<section class="p-5 bg-dark text-light">
+	<div class="container">
+		<h2 class="text-center mb-5">{% bs_icon 'dash-lg' size='1.5em' %} Your Bag {% bs_icon 'dash-lg' size='1.5em' %}</h2>
+		<div class="card mb-3 square-border">
+
+		<div class="row g-0 header-row align-items-center bg-body-secondary d-none d-md-flex">
+			<div class="col-md-2 col-4 text-center">
+			</div>
+			<div class="col-md-5 col-8">
+				<p class="mb-0">Product</p>
+			</div>
+			<div class="col-md-5 text-center">
+				<p class="mb-0">Quantity & Subtotal</p>
+			</div>
+		</div>
+
+
+		<div class="row g-0 align-items-center">
+			<div class="col-md-2 col-4">
+			<img src="img/prod2/24098.jpg" style="max-height: 240px;" class="img-fluid" alt="Product Image">
+			</div>
+			<div class="col-md-5 col-8">
+			<div class="card-body">
+				<h5 class="card-title">ProductName</h5>
+				<div class="d-flex justify-content-between">
+				<p class="card-text"><small class="text-body-secondary">Size</small></p>
+				<button class="btn btn-light btn-sm">{% bs_icon 'trash' size='1.5em' %}</button>
+				</div>
+			</div>
+			</div>
+			<div class="col-md-5 d-flex justify-content-between align-items-center p-5 mt-4">
+			<input type="number" name="quantity" value="1" min="1" class="form-control form-control-sm quantity-input">
+			<p class="card-text mb-0">700 LE</p>
+			</div>
+		</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- confirmation-->
+<section class="p-5">
+	<div class="container">
+		<div class="d-flex justify-content-around align-items-center">
+			<div>
+			<h5>Items: 1</h5>
+			<h5 class=>Total: 700</h5>
+			</div>
+			
+			<a href="#" class="btn btn-dark">Checkout</a>
+		</div>
+	</div>
+</section>
+ 
+
+
+{% endblock main %}
