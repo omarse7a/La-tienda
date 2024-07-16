@@ -3,12 +3,12 @@ from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from .models import Product, Category, Stock
 
-# Create your views here.
+# Landing page view
 def index(request):
-    return render(request, "shopping/bag.html")
+    return render(request, "home.html")
 
 
-# Product related views
+################ Product related views ################
 @cache_page(60 * 15)    # Cache for 15 minutes
 def product_list(request, cat_name):
     categories = Category.objects.all() # get all categories from db
@@ -18,7 +18,7 @@ def product_list(request, cat_name):
         products = Product.objects.filter(active=True)  # get all products from db
     else:
         category = Category.objects.get(cat_name=cat_name)
-        products = category.get_cat_products()  # get all active products by this category
+        products = category.cat_products  # get all active products by this category
 
     context = {
                 "products": products, 
@@ -52,12 +52,11 @@ def product_search(request):
 def product_details(request, slug):
     categories = Category.objects.all()  # get all categories from db
     product = Product.objects.get(slug=slug)  # get the selected product data from db
-    extra_imgs = product.get_images()
-    img_num = extra_imgs.count() if extra_imgs else 0
+    extra_imgs = product.images
+    img_num = product.image_count
     img_range = range(1, img_num+1)
     stocks = Stock.objects.filter(product=product)
     
-    ###########################################
     context = {
                 "product": product, 
                 "categories": categories,
@@ -67,3 +66,7 @@ def product_details(request, slug):
                 "stocks" : stocks,
                }
     return render(request, "products/product_details.html", context)
+
+################ Bag and Checkout views ################
+def bag(request):
+    return render(request, "shopping/bag.html")

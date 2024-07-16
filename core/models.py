@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
-# Create your models here.
+################ Product related models ################
 
 class Category(models.Model):
     cat_name = models.CharField(max_length=255, unique=True, verbose_name="category name")
@@ -9,11 +9,13 @@ class Category(models.Model):
     def __str__(self):
         return self.cat_name
     
-    def get_cat_products(self):
+    @property
+    def cat_products(self):
         return self.products.all()
     
     class Meta:
         verbose_name_plural = "Categories"
+        ordering = ['cat_name']
     
 class Product(models.Model):
 
@@ -36,25 +38,37 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-     
-    def get_images(self):
-        return self.images.all()
         
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-        #  # initialize stock for all sizes
-        # sizes = [choice[0] for choice in Stock.SIZE_CHOICES]
-        # for size in sizes:
-        #     Stock.objects.get_or_create(product=self, size=size)
+
+    @property
+    def images(self):
+        return self.productimage_set.all()
+    
+    @property
+    def image_count(self):
+        return self.productimage_set.count()
+    
+    class Meta:
+        ordering = ["active", "created_at"]
+        indexes = [
+            models.Index(fields=["name"]),
+            models.Index(fields=["category"]),
+        ]
+
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='product-images/%y/%m/%d')
 
     def __str__(self):
         return f"Image for {self.product.name}"
+    
+    class Meta:
+        ordering = ['product']
     
 
 class Stock(models.Model):
@@ -78,3 +92,6 @@ class Stock(models.Model):
         indexes = [
             models.Index(fields=['product', 'size']),
         ]
+
+################ Bag and payment related models ################
+
