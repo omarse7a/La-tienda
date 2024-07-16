@@ -10,6 +10,8 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 
+    <link rel="stylesheet" href="{% static 'layout.css' %}">
+
     {% block head %}
 
     {% endblock head %}
@@ -28,6 +30,22 @@
             {% bs_icon 'arrow-up-circle' size='2em' %}
         </a>
         <a href="#" class="text-decoration-none link-hover text-secondary">Return & Exchange Policy</a>
+        <div class="p-3">
+            <ul class="list-unstyled d-flex items-align-center justify-content-center">
+                <li class="p-2 on-hover">
+                    <a href="https://web.facebook.com/omar.sameh.14203" target="_blank">{% bs_icon 'facebook' size='1.5em' color='blue' %}</a>
+                </li>
+                <li class="p-2 on-hover">
+                    <a href="https://www.instagram.com/omarse7a/" target="_blank">{% bs_icon 'instagram' size='1.5em' color='purple' %}</a>
+                </li>
+                <li class="p-2 on-hover">
+                    <a href="https://www.linkedin.com/in/omar-sameh-470415285/" target="_blank">{% bs_icon 'linkedin' size='1.5em' %}</a>
+                </li>
+                <li class="p-2 on-hover">
+                    <a href="https://github.com/omarse7a" target="_blank">{% bs_icon 'github' size='1.5em' color='dark' %}</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </footer>
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
+from django.views.decorators.cache import cache_page
 from .models import Product, Category, Stock
 
 # Create your views here.
@@ -8,6 +9,7 @@ def index(request):
 
 
 # Product related views
+@cache_page(60 * 15)    # Cache for 15 minutes
 def product_list(request, cat_name):
     categories = Category.objects.all() # get all categories from db
 
@@ -17,7 +19,7 @@ def product_list(request, cat_name):
     else:
         category = Category.objects.get(cat_name=cat_name)
         products = category.get_cat_products()  # get all active products by this category
-    
+
     context = {
                 "products": products, 
                 "categories": categories,
@@ -46,6 +48,7 @@ def product_search(request):
                }
     return render(request, "products/product_list.html", context)
 
+@cache_page(60 * 15)    # Cache for 15 minutes
 def product_details(request, slug):
     categories = Category.objects.all()  # get all categories from db
     product = Product.objects.get(slug=slug)  # get the selected product data from db
