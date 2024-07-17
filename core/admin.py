@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from .models.product_models import Product, ProductImage, Category, Stock
+from .models.bag_models import Bag, BagItem
 
 # Register your models here.
 
@@ -40,3 +41,5 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Bag)
+admin.site.register(BagItem)

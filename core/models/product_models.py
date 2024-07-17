@@ -54,6 +54,10 @@ class Product(models.Model):
     def image_count(self):  # returns the number of extra images
         return self.productimage_set.count()
     
+    # def get_stock(self, size):
+    #     available_stock = Stock.objects.get(product=self.product, size=size)
+
+    
     class Meta:
         ordering = ["active", "created_at"]
         # enhances querying

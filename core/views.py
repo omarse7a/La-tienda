@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from .models.product_models import Product, Category, Stock
+from .utils import get_bag
 
 # Landing page view
 def index(request):
@@ -68,5 +69,12 @@ def product_details(request, slug):
     return render(request, "products/product_details.html", context)
 
 ################ Bag and Checkout views ################
-def bag(request):
-    return render(request, "shopping/bag.html")
+def bag_details(request):
+    bag = get_bag(request)
+    return render(request, "shopping/bag.html", {"bag": bag})
+
+def add_to_bag(request):
+    return redirect("bag")
+
+def remove_from_bag(request):
+    return redirect("bag")
