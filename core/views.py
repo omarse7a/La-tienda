@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.db.models import Q
 from django.views.decorators.cache import cache_page
-from .models import Product, Category, Stock
+from .models.product_models import Product, Category, Stock
 
 # Landing page view
 def index(request):

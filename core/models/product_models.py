@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ValidationError
 from django.utils.text import slugify
 
 ################ Product related models ################
@@ -10,7 +11,7 @@ class Category(models.Model):
         return self.cat_name
     
     @property
-    def cat_products(self):
+    def cat_products(self):     # returns all products which belong to a specific category
         return self.products.all()
     
     class Meta:
@@ -27,33 +28,35 @@ class Product(models.Model):
 
 
     name = models.CharField(max_length=255)
-    price = models.IntegerField(default=0)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
     description = models.TextField(blank=True, null=True)
     fit = models.CharField(max_length=255, choices=FITS, default="Regular Fit")
-    category = models.ForeignKey(Category, null=True, related_name='products', on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, null=True, related_name='products', on_delete=models.SET_NULL)   # many to one relationship
     main_image = models.ImageField(upload_to='product-images/%y/%m/%d')
     created_at = models.DateTimeField(auto_now_add=True)
-    slug = models.SlugField(unique=True, blank=True, null=True, verbose_name="name in URL")
+    slug = models.SlugField(unique=True, blank=True, null=True, verbose_name="name in URL") 
     active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
-        
+
+    # adding a slug automatically when saving    
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
     @property
-    def images(self):
+    def images(self):   # returns all product extra images
         return self.productimage_set.all()
     
     @property
-    def image_count(self):
+    def image_count(self):  # returns the number of extra images
         return self.productimage_set.count()
     
     class Meta:
         ordering = ["active", "created_at"]
+        # enhances querying
         indexes = [
             models.Index(fields=["name"]),
             models.Index(fields=["category"]),
@@ -61,7 +64,7 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE) # many to one relationship
     image = models.ImageField(upload_to='product-images/%y/%m/%d')
 
     def __str__(self):
@@ -79,19 +82,29 @@ class Stock(models.Model):
         ("Large", "L"),
         ("X-Large", "XL"),
     ]
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE) # many to one relationship
     size = models.CharField(max_length=20, choices=SIZE_CHOICES)
     quantity = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return f"{self.quantity} Pieces of {self.product.name} - Size: {self.size}"
+    
+    # increase the quantity of available stock
+    def increase_stock(self, amount):
+        self.quantity += amount
+        self.save()
+    
+    # decrease the quantity of available stock
+    def decrease_stock(self, amount):
+        if self.quantity - amount < 0:
+            raise ValidationError("Not enough stock to decrease by the specified amount")
+        self.quantity -= amount
+        self.save()
 
     class Meta:
         unique_together = ('product', 'size')
         ordering = ['product',]
+        # enhances querying
         indexes = [
             models.Index(fields=['product', 'size']),
         ]
-
-################ Bag and payment related models ################
-
