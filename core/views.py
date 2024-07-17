@@ -73,8 +73,15 @@ def bag_details(request):
     bag = get_bag(request)
     return render(request, "shopping/bag.html", {"bag": bag})
 
-def add_to_bag(request):
+def add_to_bag(request, product_id):
+    if request.method == "POST":
+        bag = get_bag(request)
+        product = Product.objects.get(id=product_id)
+        size = request.POST.get("size")
+        
+        bag.add_item(product, size)
     return redirect("bag")
 
 def remove_from_bag(request):
-    return redirect("bag")
+    # return redirect("bag")
+    pass
