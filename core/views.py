@@ -10,7 +10,7 @@ def index(request):
 
 
 ################ Product related views ################
-@cache_page(60 * 15)    # Cache for 15 minutes
+# @cache_page(60 * 15)    # Cache for 15 minutes
 def product_list(request, cat_name):
     categories = Category.objects.all() # get all categories from db
 
@@ -49,7 +49,7 @@ def product_search(request):
                }
     return render(request, "products/product_list.html", context)
 
-@cache_page(60 * 15)    # Cache for 15 minutes
+# @cache_page(60 * 15)    # Cache for 15 minutes
 def product_details(request, slug):
     categories = Category.objects.all()  # get all categories from db
     product = Product.objects.get(slug=slug)  # get the selected product data from db
@@ -71,7 +71,8 @@ def product_details(request, slug):
 ################ Bag and Checkout views ################
 def bag_details(request):
     bag = get_bag(request)
-    return render(request, "shopping/bag.html", {"bag": bag})
+    items = bag.bag_items
+    return render(request, "shopping/bag.html", {"bag": bag, "bag_items" : items})
 
 def add_to_bag(request, product_id):
     if request.method == "POST":
@@ -82,6 +83,21 @@ def add_to_bag(request, product_id):
         bag.add_item(product, size)
     return redirect("bag")
 
-def remove_from_bag(request):
-    # return redirect("bag")
-    pass
+def remove_from_bag(request, product_id):
+    if request.method == "POST":
+        bag = get_bag(request)
+        product = Product.objects.get(id=product_id)
+        size = request.POST.get("size")
+
+        bag.remove_item(product, size)
+    return redirect("bag")
+
+def update_bag(request, product_id):
+    if request.method == "POST":
+        bag = get_bag(request)
+        product = Product.objects.get(id=product_id)
+        size = request.POST.get("size")
+        quantity = request.POST.get("quantity")
+
+        bag.update_item(product, size, quantity)
+    return redirect("bag")

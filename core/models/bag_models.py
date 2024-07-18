@@ -13,11 +13,15 @@ class Bag(models.Model):
 
     @property
     def bag_items(self):
-        return self.bagitem_set
+        return self.bagitem_set.all()
+    
+    @property
+    def bag_items_num(self):
+        return sum(item.quantity  for item in self.bagitem_set.all())
 
     @property
     def bag_total(self):
-        return sum(item.item_subtotal for item in self.bagitem_set)
+        return sum(item.item_subtotal for item in self.bagitem_set.all())
     
     def add_item(self, product, size):
         item, created = BagItem.objects.get_or_create(bag=self, product=product, size=size)
@@ -27,8 +31,15 @@ class Bag(models.Model):
 
     def remove_item(self, product, size):
         try:
-            item = BagItem.objects.get(cart=self, product=product, size=size)
+            item = BagItem.objects.get(bag=self, product=product, size=size)
             item.delete()
+        except BagItem.DoesNotExist:
+            pass
+    def update_item(self, product, size, quantity=1):
+        try:
+            item = BagItem.objects.get(bag=self, product=product, size=size)
+            item.quantity = quantity
+            item.save()
         except BagItem.DoesNotExist:
             pass
     

@@ -37,7 +37,7 @@
 					<a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
 				</li>
 				<li class="nav-item px-2 px-lg-4">
-					<a href="#contact" class="nav-link" aria-label="About Us">Contact Us</a>
+					<a href="{% url 'index'%}" class="nav-link" aria-label="About Us">Contact Us</a>
 				</li>
 			</ul>
 		</div>
@@ -59,7 +59,7 @@
 		</h2>
 		<div class="card mb-3 square-border text-dark ">
 
-			<div class="row g-0 header-row align-items-center d-none d-md-flex">
+			<div class="row g-0 header-row align-items-center bg-secondary bg-gradient text-light d-none d-md-flex header">
 				<div class="col-md-2 col-4 text-center">
 				</div>
 				<div class="col-md-5 col-8">
@@ -70,26 +70,35 @@
 				</div>
 			</div>
 
-
+			{% for item in bag_items %}
 			<div class="row g-0 align-items-center">
 				<div class="col-md-2 col-4">
-					<img src="img/prod2/24098.jpg" style="max-height: 240px;" class="img-fluid" alt="Product Image">
+					<img src="{{item.product.main_image.url}}" style="max-height: 240px;" class="img-fluid" alt="{{item.product.name}}">
 				</div>
 				<div class="col-md-5 col-8">
 					<div class="card-body">
-						<h5 class="card-title">ProductName</h5>
+						<h5 class="card-title">{{item.product.name}}</h5>
 						<div class="d-flex justify-content-between">
-							<p class="card-text"><small class="text-body-secondary">Size</small></p>
-							<button class="btn btn-light btn-sm">{% bs_icon 'trash' size='1.5em' %}</button>
+							<p class="card-text"><small class="text-body-secondary">{{item.size}}</small></p>
+							<form action="{% url 'remove_item' item.product.id %}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="size" value="{{ item.size }}">
+								<button class="btn btn-light btn-sm">{% bs_icon 'trash' size='1.5em' %}</button>
+							</form>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-5 d-flex justify-content-between align-items-center p-5 mt-4">
-					<input type="number" name="quantity" value="1" min="1"
-						class="form-control form-control-sm quantity-input">
-					<p class="card-text mb-0">700 LE</p>
+					<form class="updateForm" action="{% url 'update_bag' item.product.id %}" method="post">
+						{% csrf_token %}
+						<input type="number" name="quantity" value="{{item.quantity}}" min="1"
+							class="form-control form-control-sm quantity-input">
+						<input type="hidden" name="size" value="{{ item.size }}">
+					</form>
+					<p class="card-text mb-0">{{item.item_subtotal}}</p>
 				</div>
 			</div>
+			{% endfor %}
 
 		</div>
 	</div>
@@ -100,16 +109,30 @@
 	<div class="container">
 		<div class="d-flex justify-content-around align-items-center">
 			<div>
-				<h5>Items: 1</h5>
-				<h5 class=>Total: 700</h5>
+				<h5>Items: {{bag.bag_items_num}}</h5>
+				<h5 class=>Total: {{bag.bag_total}}</h5>
 			</div>
-			<div>
-				<a href="#" class="btn btn-dark square-border mx-3">Checkout</a>
-				<a href="{% url 'products' 'all' %}" class="btn btn-outline-dark square-border">Continue Shopping</a>
+			<div class="d-flex flex-column flex-md-row">
+				<button onclick="send_updates()" class="btn btn-outline-primary square-border">Update Bag</button>
+				<a href="#" class="btn btn-outline-dark my-3 my-md-0 mx-md-3 square-border">Checkout</a>
+				<a href="{% url 'products' 'all' %}" class="btn btn-dark square-border">Continue Shopping {% bs_icon 'arrow-right-short' %}</a>
 			</div>
 		</div>
 	</div>
 </section>
+
+<script>
+	function send_updates(){
+		const forms = document.querySelectorAll('.updateForm');
+		let delay = 0;
+		forms.forEach(form => {
+			setTimeout(() => {
+				form.submit();
+			}, delay);
+			delay += 100; // delay each submission by 100 milliseconds
+		});
+	}
+</script>
  
 
 
