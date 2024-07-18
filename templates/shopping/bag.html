@@ -36,17 +36,14 @@
 				<li class="nav-item px-2 px-lg-4">
 					<a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
 				</li>
-				<li class="nav-item px-2 px-lg-4">
-					<a href="{% url 'index'%}" class="nav-link" aria-label="About Us">Contact Us</a>
-				</li>
 			</ul>
 		</div>
 		<ul class="navbar-nav d-flex flex-row ms-auto">
 			<li class="nav-item px-2 px-lg-3">
-				<a href="#" class="nav-link" aria-label="Wish List">{% bs_icon 'heart' size='1.5em' %}</a>
+				<a href="#contact" class="nav-link" aria-label="Contact Info">{% bs_icon 'info-circle' size='1.2em' %}Contact</a>
 			</li>
 			<li class="nav-item">
-				<a href="#" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.5em' %}</a>
+				<a href="{% url 'bag' %}" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.2em' %}Bag</a>
 			</li>
 		</ul>
 	</div>

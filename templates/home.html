@@ -36,17 +36,14 @@
                     <li class="nav-item px-2 px-lg-4">
                         <a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
                     </li>
-                    <li class="nav-item px-2 px-lg-4">
-                        <a href="#contact" class="nav-link" aria-label="About Us">Contact Us</a>
-                    </li>
                 </ul>
             </div>
             <ul class="navbar-nav d-flex flex-row ms-auto">
               <li class="nav-item px-2 px-lg-3">
-                  <a href="#" class="nav-link" aria-label="Wish List">{% bs_icon 'heart' size='1.5em' %}</a>
+                  <a href="#contact" class="nav-link" aria-label="Contact Info">{% bs_icon 'info-circle' size='1.2em' %}Contact</a>
               </li>
               <li class="nav-item">
-                  <a href="{% url 'bag' %}" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.5em' %}</a>
+                  <a href="{% url 'bag' %}" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.2em' %}Bag</a>
               </li>
           </ul>
         </div>
@@ -90,12 +87,56 @@
                             <span class="fw-bold">Mobile Phone:</span> +20 123 123 2222
                         </li>
                         <li class="list-group-item">
-                            <span class="fw-bold">Email:</span> name@myEmail.com
+                            <span class="fw-bold">Email:</span> omar.seha90@gmail.com
                         </li>
                     </ul>
 
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Return & Exchange Policy -->
+    <section id="policy" class="p-5 bg-white">
+        <div class="container">
+            <h2 class="text-center mb-4">Return & Exchange Policy</h2>
+            <p class="lead">If you are unsatisfied with the product you have received or ordered an incorrect product, we
+                will be glad to assist you with an exchange or refund. Returns or exchanges must be made within 30 days of
+                the original purchase shipping date, product must be unused and in original product packaging.
+                Return/Exchange Merchandise Authorization (RMA) number is required for all returns. RMA requests must be
+                submitted at our Returns Center section. The link is available at the footer of our website or by clicking
+                here.</p>
+    
+                <p class="lead text-danger">No refunds or exchanges will be made after 30 days of the original purchase shipping date.</p>
+    
+                <p class="lead">Authorized refunds will be made for the original invoice price of the item minus restocking fee if
+                applicable; shipping and handling cost is NOT refundable. Refunds can only be issued to the original payment
+                method or store credit. It is not possible to issue a refund to a different destination (e.g., another
+                credit card, PayPal or bank account). Exchanges will require additional shipping expenses. The customer will
+                be responsible for ALL costs involved in returning and/or re-shipping the product. Returns must be shipped
+                properly packaged. It is the customer’s responsibility to insure the return package – we are not liable for
+                lost or damaged merchandise.
+    
+                Items must be returned unused, undamaged, with all parts and accessories, and in original packaging.
+                Products returned with signs of wear and tear or damage will not be accepted for refund or exchange and will
+                be returned to the customer at the customer's expense. Any products that are returned used, damaged, without
+                an RMA number, without packaging or damaged packaging, missing parts or accessories, will be subject to a
+                15% restocking fee (15% of the original invoice price of the item). However, these types of returns or
+                exchanges are still subject to be denied and returned to the customer at the customer’s expense.</p>
+    
+            <p class="h5">Furthermore restocking fee of 15% may be applied to refund amount if:</p>
+            <ul class="list-group list-group-flush lead">
+                <li class="list-group-item">
+                    Return reason is “Ordered incorrect item”
+                </li>
+                <li class="list-group-item">
+                    Return reason is “No longer needed”
+                </li>
+                <li class="list-group-item">
+                    Return reason is “Do not like product”
+                </li>
+            </ul>
+            <p class="mt-3">refunds and exchanges will be processed within 3-5 days of receipt.</p>
         </div>
     </section>
 
