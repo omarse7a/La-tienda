@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+{% load bootstrap5 %}
+{% load bootstrap_icons %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block head %}
+
+{% endblock head %}
+
+{% block main %}   
+<!-- Navbar -->
+<nav class="navbar navbar-expand-md bg-dark navbar-dark py-3" aria-label="Main navigation">
+	<div class="container">
+		<a href="#" class="navbar-brand">E-Store</a>
+
+		<button 
+			class="navbar-toggler" 
+			type="button" 
+			data-bs-toggle="collapse" 
+			data-bs-target="#navmenu" 
+			aria-controls="navmenu" 
+			aria-expanded="false" 
+			aria-label="Toggle navigation"
+		>
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navmenu">
+			<ul class="navbar-nav ms-auto">
+				<li class="nav-item px-2 px-lg-4">
+					<a href="{% url 'index' %}" class="nav-link" aria-label="Home">Home</a>
+				</li>
+				<li class="nav-item px-2 px-lg-4">
+					<a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
+				</li>
+			</ul>
+		</div>
+		<ul class="navbar-nav d-flex flex-row ms-auto">
+			<li class="nav-item px-2 px-lg-3">
+				<a href="#contact" class="nav-link" aria-label="Contact Info">{% bs_icon 'info-circle' size='1.2em' %}Contact</a>
+			</li>
+			<li class="nav-item">
+				<a href="{% url 'bag' %}" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.2em' %}Bag</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+{% endblock main %} 

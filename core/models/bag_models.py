@@ -57,17 +57,36 @@ class BagItem(models.Model):
         return self.quantity * self.product.price
     
     ########### could be deleted ###########
-    def increase_quantity(self):
-        self.quantity += 1
-        available_stock = Stock.objects.get(product=self.product, size=self.size)
-        available_stock.decrease_stock(1)
+    # def increase_quantity(self):
+    #     self.quantity += 1
+    #     available_stock = Stock.objects.get(product=self.product, size=self.size)
+    #     available_stock.decrease_stock(1)
 
-    def decrease_quantity(self):
-        if self.quantity > 1:
-            self.quantity -= 1
-            available_stock = Stock.objects.get(product=self.product, size=self.size)
-            available_stock.increase_stock(1)
-        else: # i can make it remove product
-            raise ValidationError("Cannot decrease the quantity than 1")
+    # def decrease_quantity(self):
+    #     if self.quantity > 1:
+    #         self.quantity -= 1
+    #         available_stock = Stock.objects.get(product=self.product, size=self.size)
+    #         available_stock.increase_stock(1)
+    #     else: # i can make it remove product
+    #         raise ValidationError("Cannot decrease the quantity than 1")
 
+class ShippingInfo(models.Model):
+    CITIES = [
+        ("Cairo", "CAI"),
+        ("Giza", "GIZ"),
+        ("Alexandria", "ALX"),
+        ("North Coast", "NC"),
+    ]
+    customer_name = models.CharField(max_length=255)
+    customer_email = models.EmailField(max_length=255)
+    customer_number = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, choices=CITIES)
+    district = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
+    building_no = models.PositiveSmallIntegerField()
+    landmark = models.CharField(max_length=255, null=True, blank=True)
 
+    def __str__(self):
+        return f"{self.building_no} {self.street}, {self.district}, {self.city}"
+
+   

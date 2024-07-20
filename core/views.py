@@ -68,7 +68,7 @@ def product_details(request, slug):
                }
     return render(request, "products/product_details.html", context)
 
-################ Bag and Checkout views ################
+################ Bag views ################
 def bag_details(request):
     bag = get_bag(request)
     items = bag.bag_items
@@ -101,3 +101,11 @@ def update_bag(request, product_id):
 
         bag.update_item(product, size, quantity)
     return redirect("bag")
+
+################ Checkout views ################
+
+def checkout_details(request):
+    bag = get_bag(request)
+    items = bag.bag_items
+
+    return render(request, "shopping/checkout.html")
