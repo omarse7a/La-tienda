@@ -100,10 +100,12 @@ class Stock(models.Model):
     
     # decrease the quantity of available stock
     def decrease_stock(self, amount):
-        if self.quantity - amount < 0:
-            raise ValidationError("Not enough stock to decrease by the specified amount")
+        if self.quantity < amount:
+            amount = self.quantity
+            self.quantity = 0
         self.quantity -= amount
         self.save()
+        return amount
 
     class Meta:
         unique_together = ('product', 'size')
