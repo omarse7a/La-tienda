@@ -49,11 +49,20 @@
 	</div>
 </nav>
 
+
 <!-- bag products -->
 <section class="p-5 bg-dark text-light">
 	<div class="container">
 		<h2 class="text-center mb-5">{% bs_icon 'dash-lg' size='1.5em' %} Your Bag {% bs_icon 'dash-lg' size='1.5em' %}
 		</h2>
+		<!-- error alert -->
+		{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-danger square-border">
+		{{ message }}
+		</div>
+		{% endfor %}
+		{% endif %}
 		<div class="card mb-3 square-border text-dark ">
 
 			<div class="row g-0 header-row align-items-center bg-secondary bg-gradient text-light d-none d-md-flex header">

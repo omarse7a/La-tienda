@@ -93,6 +93,10 @@ class Stock(models.Model):
     def __str__(self):
         return f"{self.quantity} Pieces of {self.product.name} - Size: {self.size}"
     
+    @property
+    def available_quantity(self):
+        return self.quantity
+
     # increase the quantity of available stock
     def increase_stock(self, amount):
         self.quantity += amount

@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from .models.product_models import Product, Category, Stock
 from .utils import get_bag
+from django.contrib import messages
 
 # Landing page view
 def index(request):
@@ -107,5 +108,19 @@ def update_bag(request, product_id):
 def checkout_details(request):
     bag = get_bag(request)
     items = bag.bag_items
+    error_msgs = []
 
+    for item in items:
+        try:
+            item.adjust_quantity()
+        except ValueError as e:
+            error_msgs.append(str(e))
+
+    if error_msgs:
+        for msg in error_msgs:
+            messages.error(request, msg)
+        return redirect("bag")
+    
+    # decrease stock quantity for checkout
+    #####################################
     return render(request, "shopping/checkout.html")

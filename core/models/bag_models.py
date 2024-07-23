@@ -56,14 +56,19 @@ class BagItem(models.Model):
     def item_subtotal(self):
         return self.quantity * self.product.price
     
-    # Checks availablility for the items in the bag and adjust the quantities automatically
-    def check_availablility(self):
+    # Checks availability for the items in the bag and adjust the quantities automatically
+    def adjust_quantity(self):
         stock = Stock.objects.get(product=self.product, size=self.size)
-        stock.decrease_stock(self.quantity)
-        if not stock:
-            raise ValueError('The selected quantity is not available for some items.')
-        if self.quantity > stock.quantity:
-            raise ValueError('The selected quantity is not available for some items.')
+        if self.quantity > stock.available_quantity:
+            if not stock or stock.available_quantity == 0:
+                self.delete()
+                raise ValueError(f"{self.product.name} is out of stock. (We've removed it for you)")
+            else:
+                self.quantity = stock.available_quantity
+                self.save()
+                raise ValueError(f"The selected quantity is not available for {self.product.name}. (We've adjusted it for you)")
+        self.save()
+        # self.quantity = stock.decrease_stock(self.quantity)
         
     def reallocate_stock(self):
         stock = Stock.objects.get(product=self.product, size=self.size)
