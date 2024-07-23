@@ -49,4 +49,78 @@
 	</div>
 </nav>
 
+<div class="container">
+	<div class="row justify-content-between">
+		<!-- shipping info -->
+		<section class="col-md-7 p-5">
+			<h2>Shipping Info</h2>
+			<form class="row g-4">
+				<div class="col-12">
+					<input type="text" class="form-control" id="inputName" placeholder="Name">
+				</div>
+				<div class="col-12">
+					<input type="email" class="form-control" id="inputEmail" placeholder="Email">
+				</div>
+				<div class="col-12">
+					<input type="tel" class="form-control" id="inputPhone" placeholder="Phone">
+				</div>
+				<div class="col-lg-4">
+					<input type="number" class="form-control" id="inputBuilding" placeholder="Building no.">
+				</div>
+
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="inputStreet" placeholder="Street">
+				</div>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="inputCity" placeholder="City">
+				</div>
+				<div class="col-12">
+					<select id="inputGovernorate" class="form-select">
+						<option selected>Governorate..</option>
+						<option>...</option>
+					</select>
+				</div>
+				<div class="col-12">
+					<input type="text" class="form-control" id="inputLandmark" placeholder="Landmark (optional)">
+				</div>
+			</form>
+		</section>
+
+		<!-- order summary -->
+		<aside class="col-md-5 p-5">
+			<h2>Order Summary</h2>
+			<div class="d-flex justify-content-between align-items-center py-4">
+				<a href="#" class="btn btn-dark position-relative">
+					<img src="img/prod2/24098.jpg" alt="" class="img-fluid" style="max-height: 100px;">
+					<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+						2
+						<span class="visually-hidden">quantity</span>
+					</span>
+				</a>
+				<div>
+					<p class="lead">ProductName</p>
+					<small class="lead">size</small>
+				</div>
+				<p class="lead">1200 EGP</p>
+			</div>
+			<div class="d-flex justify-content-between">
+				<p>Subtotal</p>
+				<p>1200 EGP</p>
+			</div>
+			<div class="d-flex justify-content-between">
+				<p>Shipping</p>
+				<p>50 EGP</p>
+			</div>
+			<div class="d-flex justify-content-between">
+				<h4>Total</h4>
+				<h4>1250 EGP</h4>
+			</div>
+			<div class="mt-3">
+				<button class="btn btn-primary square-border">Confirm Order</button>
+				<a href="#" class="btn btn-outline-dark square-border mx-3">Back To Bag</a>
+			</div>
+		</aside>
+		
+	</div>
+</div>
 {% endblock main %} 
