@@ -134,3 +134,9 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# # Set the session cookie age to one week (in seconds)
+# SESSION_COOKIE_AGE = 604800
+
+# # Ensure the session is saved even if no changes have been made
+# SESSION_SAVE_EVERY_REQUEST = True

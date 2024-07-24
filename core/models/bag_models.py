@@ -1,15 +1,38 @@
+from django.utils import timezone
 from django.db import models
 from django.forms import ValidationError
 from .product_models import Product, Stock
 
 ################ Bag and Checkout models ################
 
+class ShippingInfo(models.Model):
+    GOVS = [
+        ("Cairo", "CAI"),
+        ("Giza", "GIZ"),
+        ("Alexandria", "ALX"),
+        ("North Coast", "NC"),
+    ]
+    customer_name = models.CharField(max_length=255)
+    customer_email = models.EmailField(max_length=255)
+    customer_number = models.CharField(max_length=255)
+    governorate = models.CharField(max_length=255, choices=GOVS)
+    city = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
+    building_no = models.PositiveSmallIntegerField()
+    landmark = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.building_no} {self.street}, {self.city}, {self.governorate}"
+
 class Bag(models.Model):
     session_key = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    ordered = models.BooleanField(default=False)
+    order_date = models.DateTimeField(null=True, blank=True)
+    shipping_info = models.OneToOneField(ShippingInfo, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return f"Cart {self.session_key}"
+        return f"Bag {self.session_key}"
 
     @property
     def bag_items(self):
@@ -43,6 +66,13 @@ class Bag(models.Model):
         except BagItem.DoesNotExist:
             pass
     
+    def mark_as_ordered(self, shipping_info):
+        self.ordered = True
+        self.order_date = timezone.now()
+        self.shipping_info = shipping_info
+        self.save()
+
+
 class BagItem(models.Model):
     bag = models.ForeignKey(Bag, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
@@ -71,41 +101,11 @@ class BagItem(models.Model):
         # self.quantity = stock.decrease_stock(self.quantity)
         
     def reallocate_stock(self):
-        stock = Stock.objects.get(product=self.product, size=self.size)
-        stock.increase_stock(self.quantity)
+        available_stock = Stock.objects.get(product=self.product, size=self.size)
+        available_stock.increase_stock(self.quantity)
 
-    
-    ########### could be deleted ###########
-    # def increase_quantity(self):
-    #     self.quantity += 1
-    #     available_stock = Stock.objects.get(product=self.product, size=self.size)
-    #     available_stock.decrease_stock(1)
-
-    # def decrease_quantity(self):
-    #     if self.quantity > 1:
-    #         self.quantity -= 1
-    #         available_stock = Stock.objects.get(product=self.product, size=self.size)
-    #         available_stock.increase_stock(1)
-    #     else: # i can make it remove product
-    #         raise ValidationError("Cannot decrease the quantity than 1")
-
-class ShippingInfo(models.Model):
-    GOVS = [
-        ("Cairo", "CAI"),
-        ("Giza", "GIZ"),
-        ("Alexandria", "ALX"),
-        ("North Coast", "NC"),
-    ]
-    customer_name = models.CharField(max_length=255)
-    customer_email = models.EmailField(max_length=255)
-    customer_number = models.CharField(max_length=255)
-    governorate = models.CharField(max_length=255, choices=GOVS)
-    city = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    building_no = models.PositiveSmallIntegerField()
-    landmark = models.CharField(max_length=255, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.building_no} {self.street}, {self.city}, {self.governorate}"
+    def deallocate_stock(self):
+        available_stock = Stock.objects.get(product=self.product, size=self.size)
+        available_stock.decrease_stock(self.quantity)
 
    

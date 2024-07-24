@@ -4,6 +4,7 @@ from django.views.decorators.cache import cache_page
 from .models.product_models import Product, Category, Stock
 from .utils import get_bag, get_governorates
 from django.contrib import messages
+from .forms import ShippingInfoForm
 
 # Landing page view
 def index(request):
@@ -123,11 +124,46 @@ def checkout_details(request):
             messages.error(request, msg)
         return redirect("bag")
     
+    form = ShippingInfoForm()
+
     context = {"bag": bag, 
                "bag_items" : items,
                "shipping" : shipping_value,
                "governorates" : governorates,
+               "form" : form,
                }
-    # decrease stock quantity for checkout
-    #####################################
     return render(request, "shopping/checkout.html", context)
+
+def confirm_order(request):
+    if request.method == "POST":
+        bag = get_bag(request)
+        items = bag.bag_items
+        form = ShippingInfoForm(request.POST)
+        if form.is_valid():
+            # Save shipping info
+            shipping_info = form.save()
+            # Adjust quantities and collect errors
+            errors = []
+            for item in items:
+                try:
+                    item.adjust_quantity()
+                except ValueError as e:
+                    errors.append(str(e))
+
+            if errors:
+                for error in errors:
+                    messages.error(request, error)
+                return redirect("bag")
+            # Confirm the order
+            bag.mark_as_ordered(shipping_info)
+            # deallocating the stock
+            for item in items:
+                item.deallocate_stock()
+
+            # Create a new bag for the session
+            request.session.create() ###########
+            messages.success(request, 'Order confirmed successfully.')
+
+        else:
+            messages.error(request, "Please correct the errors in the form.")
+    return redirect('checkout')

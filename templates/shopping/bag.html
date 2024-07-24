@@ -58,8 +58,9 @@
 		<!-- error alert -->
 		{% if messages %}
 		{% for message in messages %}
-		<div class="alert alert-danger square-border">
-		{{ message }}
+		<div class="alert alert-danger alert-dismissible square-border d-flex justify-content-between pb-0" role="alert">
+			<p>{{ message }}</p>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		</div>
 		{% endfor %}
 		{% endif %}

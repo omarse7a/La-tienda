@@ -50,39 +50,24 @@
 </nav>
 
 <div class="container">
+	<!-- Message alerts -->
+	{% if messages %}
+	<div class="my-3">
+		{% for message in messages %}
+		<div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible square-border fade show" role="alert">
+			{{ message }}
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
 	<div class="row justify-content-between">
 		<!-- shipping info -->
 		<section class="col-md-7 p-5">
 			<h2>Shipping Info</h2>
-			<form class="row g-4 py-4">
-				<div class="col-12">
-					<input type="text" class="form-control square-border" name="inputName" placeholder="Name" required>
-				</div>
-				<div class="col-12">
-					<input type="email" class="form-control square-border" name="inputEmail" placeholder="Email" required>
-				</div>
-				<div class="col-12">
-					<input type="tel" class="form-control square-border" name="inputPhone" placeholder="Phone" required>
-				</div>
-				<div class="col-lg-4">
-					<input type="number" class="form-control square-border" name="inputBuilding" placeholder="Building no." required>
-				</div>
-				<div class="col-lg-4">
-					<input type="text" class="form-control square-border" name="inputStreet" placeholder="Street" required>
-				</div>
-				<div class="col-lg-4">
-					<input type="text" class="form-control square-border" name="inputCity" placeholder="City" required>
-				</div>
-				<div class="col-12">
-					<select name="inputGovernorate" class="form-select square-border" required>
-						{% for gov in governorates %}
-						<option>{{gov}}</option>
-						{% endfor %}
-					</select>
-				</div>
-				<div class="col-12">
-					<input type="text" class="form-control square-border" name="inputLandmark" placeholder="Landmark (optional)">
-				</div>
+			<form action="{% url 'confirm_order' %}" method="post" id="shipping-form" class="row g-4 py-4">
+				{% csrf_token %}
+                {{ form.as_p }}
 			</form>
 		</section>
 
@@ -118,8 +103,8 @@
 				<h4>{{bag.bag_total | add:shipping}} EGP</h4>
 			</div>
 			<div class="mt-3">
-				<button class="btn btn-primary square-border">Confirm Order</button>
-				<a href="#" class="btn btn-outline-dark square-border mx-3">Back To Bag</a>
+				<button onclick="document.querySelector('#shipping-form').submit()" class="btn btn-primary square-border">Confirm Order</button>
+				<a href="{% url 'bag' %}" class="btn btn-outline-dark square-border mx-3">Back To Bag</a>
 			</div>
 		</aside>
 		
