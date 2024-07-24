@@ -90,7 +90,7 @@ class BagItem(models.Model):
     #         raise ValidationError("Cannot decrease the quantity than 1")
 
 class ShippingInfo(models.Model):
-    CITIES = [
+    GOVS = [
         ("Cairo", "CAI"),
         ("Giza", "GIZ"),
         ("Alexandria", "ALX"),
@@ -99,13 +99,13 @@ class ShippingInfo(models.Model):
     customer_name = models.CharField(max_length=255)
     customer_email = models.EmailField(max_length=255)
     customer_number = models.CharField(max_length=255)
-    city = models.CharField(max_length=255, choices=CITIES)
-    district = models.CharField(max_length=255)
+    governorate = models.CharField(max_length=255, choices=GOVS)
+    city = models.CharField(max_length=255)
     street = models.CharField(max_length=255)
     building_no = models.PositiveSmallIntegerField()
     landmark = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"{self.building_no} {self.street}, {self.district}, {self.city}"
+        return f"{self.building_no} {self.street}, {self.city}, {self.governorate}"
 
    

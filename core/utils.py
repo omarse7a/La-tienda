@@ -1,4 +1,4 @@
-from .models.bag_models import Bag, BagItem
+from .models.bag_models import Bag, ShippingInfo
 
 def get_bag(request):
     session_key = request.session.session_key # getting the session key
@@ -9,3 +9,6 @@ def get_bag(request):
     # Create or retrieve a bag
     bag, created = Bag.objects.get_or_create(session_key=session_key)
     return bag
+
+def get_governorates():
+    return [gov[0] for gov in ShippingInfo.GOVS]

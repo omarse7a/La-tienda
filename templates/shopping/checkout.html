@@ -7,7 +7,7 @@
 {% bootstrap_javascript %}
 
 {% block head %}
-
+<link rel="stylesheet" href="{% static 'shopping/css/bag.css' %}">
 {% endblock head %}
 
 {% block main %}   
@@ -54,34 +54,34 @@
 		<!-- shipping info -->
 		<section class="col-md-7 p-5">
 			<h2>Shipping Info</h2>
-			<form class="row g-4">
+			<form class="row g-4 py-4">
 				<div class="col-12">
-					<input type="text" class="form-control" id="inputName" placeholder="Name">
+					<input type="text" class="form-control square-border" name="inputName" placeholder="Name" required>
 				</div>
 				<div class="col-12">
-					<input type="email" class="form-control" id="inputEmail" placeholder="Email">
+					<input type="email" class="form-control square-border" name="inputEmail" placeholder="Email" required>
 				</div>
 				<div class="col-12">
-					<input type="tel" class="form-control" id="inputPhone" placeholder="Phone">
+					<input type="tel" class="form-control square-border" name="inputPhone" placeholder="Phone" required>
 				</div>
 				<div class="col-lg-4">
-					<input type="number" class="form-control" id="inputBuilding" placeholder="Building no.">
-				</div>
-
-				<div class="col-lg-4">
-					<input type="text" class="form-control" id="inputStreet" placeholder="Street">
+					<input type="number" class="form-control square-border" name="inputBuilding" placeholder="Building no." required>
 				</div>
 				<div class="col-lg-4">
-					<input type="text" class="form-control" id="inputCity" placeholder="City">
+					<input type="text" class="form-control square-border" name="inputStreet" placeholder="Street" required>
+				</div>
+				<div class="col-lg-4">
+					<input type="text" class="form-control square-border" name="inputCity" placeholder="City" required>
 				</div>
 				<div class="col-12">
-					<select id="inputGovernorate" class="form-select">
-						<option selected>Governorate..</option>
-						<option>...</option>
+					<select name="inputGovernorate" class="form-select square-border" required>
+						{% for gov in governorates %}
+						<option>{{gov}}</option>
+						{% endfor %}
 					</select>
 				</div>
 				<div class="col-12">
-					<input type="text" class="form-control" id="inputLandmark" placeholder="Landmark (optional)">
+					<input type="text" class="form-control square-border" name="inputLandmark" placeholder="Landmark (optional)">
 				</div>
 			</form>
 		</section>
@@ -89,31 +89,33 @@
 		<!-- order summary -->
 		<aside class="col-md-5 p-5">
 			<h2>Order Summary</h2>
+			{% for item in bag_items %}
 			<div class="d-flex justify-content-between align-items-center py-4">
-				<a href="#" class="btn btn-dark position-relative">
-					<img src="img/prod2/24098.jpg" alt="" class="img-fluid" style="max-height: 100px;">
+				<a href="{% url 'product' item.product.id %}" class="btn btn-dark position-relative square-border">
+					<img src="{{ item.product.main_image.url }}" alt="{{ item.product.name }}" class="img-fluid" style="max-height: 100px;">
 					<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-						2
+						{{ item.quantity }}
 						<span class="visually-hidden">quantity</span>
 					</span>
 				</a>
 				<div>
-					<p class="lead">ProductName</p>
-					<small class="lead">size</small>
+					<p class="lead">{{ item.product.name }}</p>
+					<small>{{ item.size }}</small>
 				</div>
-				<p class="lead">1200 EGP</p>
+				<p class="lead">{{item.item_subtotal}} EGP</p>
 			</div>
+			{% endfor %}
 			<div class="d-flex justify-content-between">
 				<p>Subtotal</p>
-				<p>1200 EGP</p>
+				<p>{{bag.bag_total}} EGP</p>
 			</div>
 			<div class="d-flex justify-content-between">
 				<p>Shipping</p>
-				<p>50 EGP</p>
+				<p>{{shipping}} EGP</p>
 			</div>
 			<div class="d-flex justify-content-between">
 				<h4>Total</h4>
-				<h4>1250 EGP</h4>
+				<h4>{{bag.bag_total | add:shipping}} EGP</h4>
 			</div>
 			<div class="mt-3">
 				<button class="btn btn-primary square-border">Confirm Order</button>

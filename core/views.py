@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from .models.product_models import Product, Category, Stock
-from .utils import get_bag
+from .utils import get_bag, get_governorates
 from django.contrib import messages
 
 # Landing page view
@@ -108,6 +108,8 @@ def update_bag(request, product_id):
 def checkout_details(request):
     bag = get_bag(request)
     items = bag.bag_items
+    shipping_value = 50
+    governorates = get_governorates()
     error_msgs = []
 
     for item in items:
@@ -121,6 +123,11 @@ def checkout_details(request):
             messages.error(request, msg)
         return redirect("bag")
     
+    context = {"bag": bag, 
+               "bag_items" : items,
+               "shipping" : shipping_value,
+               "governorates" : governorates,
+               }
     # decrease stock quantity for checkout
     #####################################
-    return render(request, "shopping/checkout.html")
+    return render(request, "shopping/checkout.html", context)
