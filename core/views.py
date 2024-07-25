@@ -112,7 +112,7 @@ def checkout_details(request):
     shipping_value = 50
     governorates = get_governorates()
     error_msgs = []
-
+    # Adjust quantities and collect errors
     for item in items:
         try:
             item.adjust_quantity()
@@ -161,9 +161,10 @@ def confirm_order(request):
                 item.deallocate_stock()
 
             # Create a new bag for the session
-            request.session.create() ###########
+            request.session.flush() ###########
             messages.success(request, 'Order confirmed successfully.')
+            return redirect('bag')
 
         else:
-            messages.error(request, "Please correct the errors in the form.")
+            messages.error(request, "Please correct the errors in the shipping info.")
     return redirect('checkout')

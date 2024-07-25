@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'navbar.html' %}
 
 {% load static %}
 {% load bootstrap5 %}
@@ -10,59 +10,23 @@
 <link rel="stylesheet" href="{% static 'shopping/css/bag.css' %}">
 {% endblock head %}
 
-{% block main %}
-<!-- Navbar -->
-<nav class="navbar navbar-expand-md bg-dark navbar-dark py-3" aria-label="Main navigation">
-	<div class="container">
-		<a href="#" class="navbar-brand">E-Store</a>
-
-		<button 
-			class="navbar-toggler" 
-			type="button" 
-			data-bs-toggle="collapse" 
-			data-bs-target="#navmenu" 
-			aria-controls="navmenu" 
-			aria-expanded="false" 
-			aria-label="Toggle navigation"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navmenu">
-			<ul class="navbar-nav ms-auto">
-				<li class="nav-item px-2 px-lg-4">
-					<a href="{% url 'index' %}" class="nav-link" aria-label="Home">Home</a>
-				</li>
-				<li class="nav-item px-2 px-lg-4">
-					<a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
-				</li>
-			</ul>
-		</div>
-		<ul class="navbar-nav d-flex flex-row ms-auto">
-			<li class="nav-item px-2 px-lg-3">
-				<a href="#contact" class="nav-link" aria-label="Contact Info">{% bs_icon 'info-circle' size='1.2em' %}Contact</a>
-			</li>
-			<li class="nav-item">
-				<a href="{% url 'bag' %}" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.2em' %}Bag</a>
-			</li>
-		</ul>
-	</div>
-</nav>
-
+{% block content %}
 
 <!-- bag products -->
 <section class="p-5 bg-dark text-light">
 	<div class="container">
 		<h2 class="text-center mb-5">{% bs_icon 'dash-lg' size='1.5em' %} Your Bag {% bs_icon 'dash-lg' size='1.5em' %}
 		</h2>
-		<!-- error alert -->
+		<!-- Message alerts -->
 		{% if messages %}
-		{% for message in messages %}
-		<div class="alert alert-danger alert-dismissible square-border d-flex justify-content-between pb-0" role="alert">
-			<p>{{ message }}</p>
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		<div class="my-3">
+			{% for message in messages %}
+			<div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible square-border fade show" role="alert">
+				{{ message }}
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+			{% endfor %}
 		</div>
-		{% endfor %}
 		{% endif %}
 		<div class="card mb-3 square-border text-dark ">
 			
@@ -155,4 +119,4 @@
  
 
 
-{% endblock main %}
+{% endblock content %}

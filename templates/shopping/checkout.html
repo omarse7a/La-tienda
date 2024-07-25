@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'navbar.html' %}
 
 {% load static %}
 {% load bootstrap5 %}
@@ -10,64 +10,49 @@
 <link rel="stylesheet" href="{% static 'shopping/css/bag.css' %}">
 {% endblock head %}
 
-{% block main %}   
-<!-- Navbar -->
-<nav class="navbar navbar-expand-md bg-dark navbar-dark py-3" aria-label="Main navigation">
-	<div class="container">
-		<a href="#" class="navbar-brand">E-Store</a>
+{% block content %}   
 
-		<button 
-			class="navbar-toggler" 
-			type="button" 
-			data-bs-toggle="collapse" 
-			data-bs-target="#navmenu" 
-			aria-controls="navmenu" 
-			aria-expanded="false" 
-			aria-label="Toggle navigation"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navmenu">
-			<ul class="navbar-nav ms-auto">
-				<li class="nav-item px-2 px-lg-4">
-					<a href="{% url 'index' %}" class="nav-link" aria-label="Home">Home</a>
-				</li>
-				<li class="nav-item px-2 px-lg-4">
-					<a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
-				</li>
-			</ul>
-		</div>
-		<ul class="navbar-nav d-flex flex-row ms-auto">
-			<li class="nav-item px-2 px-lg-3">
-				<a href="#contact" class="nav-link" aria-label="Contact Info">{% bs_icon 'info-circle' size='1.2em' %}Contact</a>
-			</li>
-			<li class="nav-item">
-				<a href="{% url 'bag' %}" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.2em' %}Bag</a>
-			</li>
-		</ul>
-	</div>
-</nav>
+<!-- error alert -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger alert-dismissible square-border d-flex justify-content-between pb-0" role="alert">
+	<p>{{ message }}</p>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
 
 <div class="container">
-	<!-- Message alerts -->
-	{% if messages %}
-	<div class="my-3">
-		{% for message in messages %}
-		<div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible square-border fade show" role="alert">
-			{{ message }}
-			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-		</div>
-		{% endfor %}
-	</div>
-	{% endif %}
 	<div class="row justify-content-between">
 		<!-- shipping info -->
 		<section class="col-md-7 p-5">
 			<h2>Shipping Info</h2>
 			<form action="{% url 'confirm_order' %}" method="post" id="shipping-form" class="row g-4 py-4">
 				{% csrf_token %}
-                {{ form.as_p }}
+                <div class="col-12">
+                    {{ form.customer_name }}
+                </div>
+                <div class="col-12">
+                    {{ form.customer_email }}
+                </div>
+                <div class="col-12">
+                    {{ form.customer_number }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form.building_no }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form.street }}
+                </div>
+                <div class="col-lg-4">
+                    {{ form.city }}
+                </div>
+                <div class="col-12">
+                    {{ form.governorate }}
+                </div>
+                <div class="col-12">
+                    {{ form.landmark }}
+                </div>
 			</form>
 		</section>
 
@@ -110,4 +95,4 @@
 		
 	</div>
 </div>
-{% endblock main %} 
+{% endblock content %} 

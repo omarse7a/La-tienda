@@ -1,9 +1,21 @@
-nav .navbar-brand{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+#showcase{
+    min-height: 93vh;
 }
 
-/* body::before {
-    display: block;
-    content: '';
-    height: 5vh;
-} */
+#showcase h1{
+    font-size: 8vw;
+}
+
+#showcase small{
+    font-size: 0.8vw;
+}
+
+@media (max-width: 768px) {
+    #showcase h1{
+        font-size: 20vw;
+    }
+    
+    #showcase small{
+        font-size: 3vw;
+    }
+}

@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'navbar.html' %}
 
 {% load static %}
 {% load bootstrap5 %}
@@ -10,136 +10,101 @@
 <link rel="stylesheet" href="{% static 'core/css/home.css' %}">
 {% endblock head %}
 
-{% block main %}  
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark py-3" aria-label="Main navigation">
-        <div class="container">
-            <a href="#" class="navbar-brand">E-Store</a>
+{% block content %}  
 
-            <button 
-                class="navbar-toggler" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#navmenu" 
-                aria-controls="navmenu" 
-                aria-expanded="false" 
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<!-- showcase -->
+<section id="showcase" class="p-5 pb-0 bg-dark text-light">
+    <div>
+            <div class="logo text-center py-5 my-5">
+                <small class="ovo-regular">EST. 2024</small>
+                <h1 class="meow-script-regular">TimeLess</h1>
+                <small class="ovo-regular">CLOTHING</small>
+            </div>
+            
+            <div class="py-5 container">
+                <p class="lead mb-4">At TimeLess, we believe that fashion is a reflection of individuality. Since our inception in 2024, we've been dedicated to curating timeless pieces that blend classic elegance with contemporary trends. Our collections are crafted with the finest materials and designed to stand the test of time.</p>
+                <p class="lead mb-4">
+                    Explore our latest collections and discover the essence of timeless style.
+                    <a href="{% url 'products' 'all' %}" class="btn btn-light btn-sm mx-md-4">Shop Now {% bs_icon 'arrow-right' %}</a>
+                </p>
+            </div>
+    </div>
+</section>
 
-            <div class="collapse navbar-collapse" id="navmenu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item px-2 px-lg-4">
-                        <a href="#" class="nav-link" aria-label="Home">Home</a>
+<!-- featured products -->
+
+<!-- contact us -->
+<section id="contact" class="p-5 bg-white">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md">
+
+                <h2 class="text-center mb-4">Contact Info</h2>
+
+                <ul class="list-group list-group-flush lead">
+                    <li class="list-group-item">
+                        <span class="fw-bold">Main Location:</span> Dokki, Giza
                     </li>
-                    <li class="nav-item px-2 px-lg-4">
-                        <a href="{% url 'products' 'all' %}" class="nav-link" aria-label="Products">Products</a>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Phone:</span> 02381377123
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Mobile Phone:</span> +20 123 123 2222
+                    </li>
+                    <li class="list-group-item">
+                        <span class="fw-bold">Email:</span> omar.seha90@gmail.com
                     </li>
                 </ul>
-            </div>
-            <ul class="navbar-nav d-flex flex-row ms-auto">
-              <li class="nav-item px-2 px-lg-3">
-                  <a href="#contact" class="nav-link" aria-label="Contact Info">{% bs_icon 'info-circle' size='1.2em' %}Contact</a>
-              </li>
-              <li class="nav-item">
-                  <a href="{% url 'bag' %}" class="nav-link" aria-label="Shopping Bag">{% bs_icon 'bag' size='1.2em' %}Bag</a>
-              </li>
-          </ul>
-        </div>
-    </nav>
 
-    <!-- showcase -->
-    <section id="showcase" class="p-5 pb-0 bg-dark text-light">
-        <div class="container">
-            <div class="row align-items-center justify-content-between mt-3">
-                <div class="col-lg-8">
-                    <h1>Welcome to Our Store</h1>
-                    <p class="lead">Discover our latest collections.</p>
-                    <a href="{% url 'products' 'all' %}" class="btn btn-light my-3">Shop now {% bs_icon 'arrow-right' %}</a>
-                </div>
-                <div class="col-lg-4">
-                    <img class="img-fluid" src="{% static 'core/images/showcase_model.png' %}" alt="model photo">
-                </div>
             </div>
         </div>
-        
-    </section>
+    </div>
+</section>
 
-    <!-- featured products -->
+<!-- Return & Exchange Policy -->
+<section id="policy" class="p-5 bg-white">
+    <div class="container">
+        <h2 class="text-center mb-4">Return & Exchange Policy</h2>
+        <p class="lead">If you are unsatisfied with the product you have received or ordered an incorrect product, we
+            will be glad to assist you with an exchange or refund. Returns or exchanges must be made within 30 days of
+            the original purchase shipping date, product must be unused and in original product packaging.
+            Return/Exchange Merchandise Authorization (RMA) number is required for all returns. RMA requests must be
+            submitted at our Returns Center section. The link is available at the footer of our website or by clicking
+            here.</p>
 
-    <!-- contact us -->
-    <section id="contact" class="p-5 bg-white">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md">
+            <p class="lead text-danger">No refunds or exchanges will be made after 30 days of the original purchase shipping date.</p>
 
-                    <h2 class="text-center mb-4">Contact Info</h2>
+            <p class="lead">Authorized refunds will be made for the original invoice price of the item minus restocking fee if
+            applicable; shipping and handling cost is NOT refundable. Refunds can only be issued to the original payment
+            method or store credit. It is not possible to issue a refund to a different destination (e.g., another
+            credit card, PayPal or bank account). Exchanges will require additional shipping expenses. The customer will
+            be responsible for ALL costs involved in returning and/or re-shipping the product. Returns must be shipped
+            properly packaged. It is the customer’s responsibility to insure the return package – we are not liable for
+            lost or damaged merchandise.
 
-                    <ul class="list-group list-group-flush lead">
-                        <li class="list-group-item">
-                            <span class="fw-bold">Main Location:</span> Dokki, Giza
-                        </li>
-                        <li class="list-group-item">
-                            <span class="fw-bold">Phone:</span> 02381377123
-                        </li>
-                        <li class="list-group-item">
-                            <span class="fw-bold">Mobile Phone:</span> +20 123 123 2222
-                        </li>
-                        <li class="list-group-item">
-                            <span class="fw-bold">Email:</span> omar.seha90@gmail.com
-                        </li>
-                    </ul>
+            Items must be returned unused, undamaged, with all parts and accessories, and in original packaging.
+            Products returned with signs of wear and tear or damage will not be accepted for refund or exchange and will
+            be returned to the customer at the customer's expense. Any products that are returned used, damaged, without
+            an RMA number, without packaging or damaged packaging, missing parts or accessories, will be subject to a
+            15% restocking fee (15% of the original invoice price of the item). However, these types of returns or
+            exchanges are still subject to be denied and returned to the customer at the customer’s expense.</p>
 
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Return & Exchange Policy -->
-    <section id="policy" class="p-5 bg-white">
-        <div class="container">
-            <h2 class="text-center mb-4">Return & Exchange Policy</h2>
-            <p class="lead">If you are unsatisfied with the product you have received or ordered an incorrect product, we
-                will be glad to assist you with an exchange or refund. Returns or exchanges must be made within 30 days of
-                the original purchase shipping date, product must be unused and in original product packaging.
-                Return/Exchange Merchandise Authorization (RMA) number is required for all returns. RMA requests must be
-                submitted at our Returns Center section. The link is available at the footer of our website or by clicking
-                here.</p>
-    
-                <p class="lead text-danger">No refunds or exchanges will be made after 30 days of the original purchase shipping date.</p>
-    
-                <p class="lead">Authorized refunds will be made for the original invoice price of the item minus restocking fee if
-                applicable; shipping and handling cost is NOT refundable. Refunds can only be issued to the original payment
-                method or store credit. It is not possible to issue a refund to a different destination (e.g., another
-                credit card, PayPal or bank account). Exchanges will require additional shipping expenses. The customer will
-                be responsible for ALL costs involved in returning and/or re-shipping the product. Returns must be shipped
-                properly packaged. It is the customer’s responsibility to insure the return package – we are not liable for
-                lost or damaged merchandise.
-    
-                Items must be returned unused, undamaged, with all parts and accessories, and in original packaging.
-                Products returned with signs of wear and tear or damage will not be accepted for refund or exchange and will
-                be returned to the customer at the customer's expense. Any products that are returned used, damaged, without
-                an RMA number, without packaging or damaged packaging, missing parts or accessories, will be subject to a
-                15% restocking fee (15% of the original invoice price of the item). However, these types of returns or
-                exchanges are still subject to be denied and returned to the customer at the customer’s expense.</p>
-    
-            <p class="h5">Furthermore restocking fee of 15% may be applied to refund amount if:</p>
-            <ul class="list-group list-group-flush lead">
-                <li class="list-group-item">
-                    Return reason is “Ordered incorrect item”
-                </li>
-                <li class="list-group-item">
-                    Return reason is “No longer needed”
-                </li>
-                <li class="list-group-item">
-                    Return reason is “Do not like product”
-                </li>
-            </ul>
-            <p class="mt-3">refunds and exchanges will be processed within 3-5 days of receipt.</p>
-        </div>
-    </section>
+        <p class="h5">Furthermore restocking fee of 15% may be applied to refund amount if:</p>
+        <ul class="list-group list-group-flush lead">
+            <li class="list-group-item">
+                Return reason is “Ordered incorrect item”
+            </li>
+            <li class="list-group-item">
+                Return reason is “No longer needed”
+            </li>
+            <li class="list-group-item">
+                Return reason is “Do not like product”
+            </li>
+        </ul>
+        <p class="mt-3">refunds and exchanges will be processed within 3-5 days of receipt.</p>
+    </div>
+</section>
 
 
-{% endblock main %} 
+{% endblock content %} 
   

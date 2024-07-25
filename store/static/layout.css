@@ -1,3 +1,16 @@
+.ovo-regular{
+    font-family: "Ovo", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.meow-script-regular {
+    font-family: "Meow Script", cursive;
+    font-weight: 400;
+    font-style: normal;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.1); /* Adjust shadow as needed */
+}
+  
 .on-hover:hover{
     opacity: 0.7;
 }
