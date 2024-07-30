@@ -7,10 +7,10 @@ from .product_models import Product, Stock
 
 class ShippingInfo(models.Model):
     GOVS = [
-        ("Cairo", "CAI"),
-        ("Giza", "GIZ"),
-        ("Alexandria", "ALX"),
-        ("North Coast", "NC"),
+        ("cairo", "Cairo"),
+        ("giza", "Giza"),
+        ("alexandria", "Alexandria"),
+        ("north_coast", "North Coast"),
     ]
     customer_name = models.CharField(max_length=255)
     customer_email = models.EmailField(max_length=255)
@@ -23,6 +23,7 @@ class ShippingInfo(models.Model):
 
     def __str__(self):
         return f"{self.building_no} {self.street}, {self.city}, {self.governorate}"
+    
 
 class Bag(models.Model):
     session_key = models.CharField(max_length=255, unique=True)
@@ -71,6 +72,11 @@ class Bag(models.Model):
         self.order_date = timezone.now()
         self.shipping_info = shipping_info
         self.save()
+
+    def delete(self):
+        if self.shipping_info:
+            self.shipping_info.delete()
+        return super().delete()
 
 
 class BagItem(models.Model):

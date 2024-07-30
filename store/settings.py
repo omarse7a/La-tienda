@@ -127,16 +127,16 @@ STATICFILES_DIRS = [
 ]
 
 #media files config.
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# # Set the session cookie age to one week (in seconds)
-# SESSION_COOKIE_AGE = 604800
+# Set the session cookie age to three days  (in seconds)
+SESSION_COOKIE_AGE = 259200
 
-# # Ensure the session is saved even if no changes have been made
-# SESSION_SAVE_EVERY_REQUEST = True
+# Ensure the session is saved even if no changes have been made
+SESSION_SAVE_EVERY_REQUEST = True

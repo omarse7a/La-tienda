@@ -59,7 +59,7 @@ class Product(models.Model):
 
     
     class Meta:
-        ordering = ["active", "created_at"]
+        ordering = ["-active", "created_at"]
         # enhances querying
         indexes = [
             models.Index(fields=["name"]),

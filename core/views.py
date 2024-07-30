@@ -21,7 +21,7 @@ def product_list(request, cat_name):
         products = Product.objects.filter(active=True)  # get all products from db
     else:
         category = Category.objects.get(cat_name=cat_name)
-        products = category.cat_products  # get all active products by this category
+        products = category.cat_products.filter(active=True)  # get all active products by this category
 
     context = {
                 "products": products, 
