@@ -39,10 +39,7 @@
                     {{ form.customer_number }}
                 </div>
                 <div class="col-lg-4">
-                    {{ form.building_no }}
-                </div>
-                <div class="col-lg-4">
-                    {{ form.street }}
+                    {{ form.address }}
                 </div>
                 <div class="col-lg-4">
                     {{ form.city }}
@@ -68,7 +65,7 @@
 						<span class="visually-hidden">quantity</span>
 					</span>
 				</a>
-				<div>
+				<div class="px-3">
 					<p class="lead">{{ item.product.name }}</p>
 					<small>{{ item.size }}</small>
 				</div>

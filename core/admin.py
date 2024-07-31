@@ -1,9 +1,12 @@
+from typing import Any
 from django.contrib import admin
 from django.contrib.auth.models import Group
+from django.db.models.query import QuerySet
+from django.http import HttpRequest
 from .models.product_models import Product, ProductImage, Category, Stock
 from .models.bag_models import Bag, BagItem,ShippingInfo
 
-# Register your models here.
+################ Product management admin models ################
 
 admin.site.unregister(Group)
 # admin site setup
@@ -37,11 +40,45 @@ class ProductAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ["cat_name",]
 
+################ Order management admin models ################
+
+class OrderItemInline(admin.TabularInline):
+        model = BagItem
+        extra = 0
+        def get_readonly_fields(self, request, obj=None):
+            return ["product", "size", "quantity"]
+
+class ShippingInfoInline(admin.StackedInline):
+    model = ShippingInfo
+    extra = 0
+
+# tracking orders in admin panel using the Bag model
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["order_display", "session_key", "delivered", "bag_items_num", "bag_total"]
+    list_editable = ["delivered"]
+    fields = ["order_date", "ordered", "delivered", "bag_items_num", "bag_total"]
+    readonly_fields = ["order_date", "ordered", "bag_items_num", "bag_total"]
+    inlines = [OrderItemInline, ShippingInfoInline]
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.filter(ordered = True)
+    
+    def order_display(self, obj):
+        return str(obj)
+    order_display.short_description = "Order ID"
+
+    def bag_items_num(self, obj):
+        return obj.bag_items_num
+    
+    def bag_total(self, obj):
+        return obj.bag_total
+
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(Bag)
-admin.site.register(BagItem)
-admin.site.register(ShippingInfo)
+admin.site.register(Bag, OrderAdmin)
+
+# admin.site.register(Bag)
+# admin.site.register(BagItem)
+# admin.site.register(ShippingInfo)

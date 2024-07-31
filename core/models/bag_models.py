@@ -1,3 +1,4 @@
+from typing import Iterable
 from django.utils import timezone
 from django.db import models
 from django.forms import ValidationError
@@ -5,35 +6,15 @@ from .product_models import Product, Stock
 
 ################ Bag and Checkout models ################
 
-class ShippingInfo(models.Model):
-    GOVS = [
-        ("cairo", "Cairo"),
-        ("giza", "Giza"),
-        ("alexandria", "Alexandria"),
-        ("north_coast", "North Coast"),
-    ]
-    customer_name = models.CharField(max_length=255)
-    customer_email = models.EmailField(max_length=255)
-    customer_number = models.CharField(max_length=255)
-    governorate = models.CharField(max_length=255, choices=GOVS)
-    city = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    building_no = models.PositiveSmallIntegerField()
-    landmark = models.CharField(max_length=255, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.building_no} {self.street}, {self.city}, {self.governorate}"
-    
-
 class Bag(models.Model):
     session_key = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     ordered = models.BooleanField(default=False)
     order_date = models.DateTimeField(null=True, blank=True)
-    shipping_info = models.OneToOneField(ShippingInfo, on_delete=models.SET_NULL, null=True, blank=True)
+    delivered = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Bag {self.session_key}"
+        return f"Order {self.id}"
 
     @property
     def bag_items(self):
@@ -70,13 +51,19 @@ class Bag(models.Model):
     def mark_as_ordered(self, shipping_info):
         self.ordered = True
         self.order_date = timezone.now()
-        self.shipping_info = shipping_info
+        shipping_info.bag = self
+        shipping_info.save()
         self.save()
 
     def delete(self):
-        if self.shipping_info:
-            self.shipping_info.delete()
+        if self.shippinginfo:
+            self.shippinginfo.delete()
         return super().delete()
+    
+    class Meta:
+        verbose_name = "Order"
+        verbose_name_plural = "Orders"
+        ordering = ["delivered","order_date"]
 
 
 class BagItem(models.Model):
@@ -104,7 +91,6 @@ class BagItem(models.Model):
                 self.save()
                 raise ValueError(f"The selected quantity is not available for {self.product.name}. (We've adjusted it for you)")
         self.save()
-        # self.quantity = stock.decrease_stock(self.quantity)
         
     def reallocate_stock(self):
         available_stock = Stock.objects.get(product=self.product, size=self.size)
@@ -113,5 +99,27 @@ class BagItem(models.Model):
     def deallocate_stock(self):
         available_stock = Stock.objects.get(product=self.product, size=self.size)
         available_stock.decrease_stock(self.quantity)
+    
+    class Meta:
+        verbose_name_plural = "items"
 
-   
+
+class ShippingInfo(models.Model):
+    GOVS = [
+        ("cairo", "Cairo"),
+        ("giza", "Giza"),
+        ("alexandria", "Alexandria"),
+        ("north_coast", "North Coast"),
+    ]
+    customer_name = models.CharField(max_length=255)
+    customer_email = models.EmailField(max_length=255)
+    customer_number = models.CharField(max_length=255)
+    governorate = models.CharField(max_length=255, choices=GOVS)
+    city = models.CharField(max_length=255)
+    address = models.CharField(max_length=255, blank=True)
+    landmark = models.CharField(max_length=255, null=True, blank=True)
+    bag = models.OneToOneField(Bag, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.address}, {self.city}, {self.governorate}"
+    

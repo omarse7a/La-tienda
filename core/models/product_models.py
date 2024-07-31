@@ -112,6 +112,7 @@ class Stock(models.Model):
         return amount
 
     class Meta:
+        # only allowing unique combinations of product and size
         unique_together = ('product', 'size')
         ordering = ['product',]
         # enhances querying
