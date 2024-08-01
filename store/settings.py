@@ -135,8 +135,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Set the session cookie age to three days  (in seconds)
-SESSION_COOKIE_AGE = 259200
+# Set the session cookie age to one day  (in seconds)
+SESSION_COOKIE_AGE = 86400
 
 # Ensure the session is saved even if no changes have been made
 SESSION_SAVE_EVERY_REQUEST = True
