@@ -3,39 +3,19 @@
 }
 
 #showcase h1{
-    font-size: 10em;
+    font-size: 8vw;
 }
 
 #showcase small{
-    font-size: 1.2em;
+    font-size: 0.8vw;
 }
 
-/* Custom font sizes for h1 */
-.h1-custom {
-    font-size: 2em; /* default font size */
-  }
-  @media (min-width: 576px) {
-    .h1-custom {
-      font-size: 3em; /* font size for small screens (sm) */
+@media (max-width: 768px) {
+    #showcase h1{
+        font-size: 20vw;
     }
-  }
-  @media (min-width: 768px) {
-    .h1-custom {
-      font-size: 4em; /* font size for medium screens (md) */
+    
+    #showcase small{
+        font-size: 3vw;
     }
-  }
-  @media (min-width: 992px) {
-    .h1-custom {
-      font-size: 6em; /* font size for large screens (lg) */
-    }
-  }
-  @media (min-width: 1200px) {
-    .h1-custom {
-      font-size: 8em; /* font size for extra large screens (xl) */
-    }
-  }
-  @media (min-width: 1400px) {
-    .h1-custom {
-      font-size: 10em; /* font size for extra extra large screens (xxl) */
-    }
-  }
+}
