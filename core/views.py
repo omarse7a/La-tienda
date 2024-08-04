@@ -37,7 +37,7 @@ def product_search(request):
     search_value = request.GET.get("search-inp", "")
     if search_value:
         products = Product.objects.filter(
-            Q(name__icontains=search_value) | Q(category__cat_name__startswith=search_value)
+            (Q(name__icontains=search_value) | Q(category__cat_name__startswith=search_value)) & Q(active=True)
         )
         selected_cat = f"results for '{search_value}'"
     else:
