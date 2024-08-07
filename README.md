@@ -16,6 +16,7 @@ Check out the live demo at [La Tienda](http://latienda.pythonanywhere.com).
 ## Features
 
 - Browse a wide range of clothing items
+- Shopping cart using web sessions
 - Add items to a shopping cart
 - Update item quantities and remove items from the cart
 - Checkout process with stock availability checks
